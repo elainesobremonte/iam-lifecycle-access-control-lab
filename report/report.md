@@ -87,5 +87,7 @@ The lab demonstrated a working OIDC authentication flow, role-based authorizatio
 The project provided practical experience with IAM configuration, access validation, account lifecycle concepts, and access review documentation.
 
 ## 10. Evidence
+Screenshots supporting the documented scenarios will be organized in the evidence/ directory.
+- [Evidence and Screenshots](../evidence/README.md)
 
 
