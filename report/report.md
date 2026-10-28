@@ -55,7 +55,6 @@ The `it_admin` role has elevated access across all three application areas. This
 | IAM-05 | IT administrator accesses HR, Finance, and IT | Access granted | Passed |
 | IAM-06 | Disabled HR user attempts a new login | Authentication rejected | Passed |
 
-The Finance user's permissions were tested. The report should be updated if additional test results or screenshots become available.
 
 ## 6. Account Deactivation and Offboarding
 
