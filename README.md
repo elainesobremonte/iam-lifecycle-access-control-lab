@@ -10,6 +10,13 @@ This project demonstrates core Identity and Access Management (IAM) concepts thr
 
 The project focuses on authentication, role-based access control (RBAC), access validation, account deactivation, and access review documentation.
 
+## Project Files
+
+- [Technical Lab Report](report/report.md) — configuration, test scenarios, results, and limitations.
+- [Evidence & Screenshots](evidence/README.md) — screenshots documenting the Keycloak configuration and validation tests.
+- [Access Review Report](access-review.md) — account status, assigned roles, review decisions, and recommendations.
+- [Application Source Code](app/app.py) — Flask application and role-based access control logic.
+
 ## Objectives
 
 - Configure centralized authentication using Keycloak and OIDC.
@@ -59,9 +66,13 @@ The following scenarios were tested:
 - **Privileged access:** The IT administrator's access to all three application areas was tested.
 - **Account deactivation:** A disabled HR account was rejected during a new login attempt.
 
-Test outcomes and access review findings are documented in `access-review.md`.
+The results reflect the specific scenarios tested in the local environment. See the [Technical Lab Report](report/report.md) for the documented test cases and the [Access Review Report](access-review.md) for review decisions and recommendations.
 
-Configuration and validation screenshots will be added to the `evidence/` directory.
+## Evidence & Screenshots
+
+Screenshots documenting the Keycloak configuration, role assignments, authorization results, and account deactivation test are organized in the [`evidence/`](evidence/README.md) directory.
+
+The evidence index describes the purpose of each screenshot and links the visual documentation to the corresponding lab activities.
 
 ## Access Review & Offboarding
 
@@ -80,6 +91,7 @@ Key security considerations include:
 This lab is intended for local development and testing.
 
 **Prerequisites**
+
 - Python 3.11 or a compatible version
 - Keycloak
 - Required Python packages for the Flask application
@@ -89,10 +101,8 @@ This lab is intended for local development and testing.
 1. Start Keycloak in development mode, configured to listen on `127.0.0.1:8080`.
 2. Configure the `northstar` realm, the `northstar-flask` client, OIDC redirect URIs, role mappings, and fictional test users.
 3. Set the following environment variables in your terminal:
-
    - `FLASK_SECRET_KEY`
    - `KEYCLOAK_CLIENT_SECRET`
-
 4. Install the application's required Python dependencies.
 5. From the project root, start the Flask application:
 
@@ -102,7 +112,7 @@ This lab is intended for local development and testing.
 
 6. Open `http://127.0.0.1:5000` in your browser and test the configured accounts and access permissions.
 
-**Security note:** Never publish actual credentials, passwords, tokens, or secret values. Use fictional accounts and local development credentials only.
+**Security Note:** Never publish actual credentials, passwords, tokens, or secret values. Use fictional accounts and local development credentials only.
 
 ## Scope & Limitations
 
@@ -119,4 +129,3 @@ Existing-session behavior, immediate token revocation, production-grade session 
 - Account deactivation and offboarding simulation
 - Access review and security documentation
 - Secure handling of application secrets
-
