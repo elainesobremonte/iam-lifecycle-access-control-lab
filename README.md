@@ -1,188 +1,122 @@
-\# Northstar Solutions — IAM Lifecycle and Access Control Lab
+# IAM Lifecycle & Access Control Lab
 
+**Project Type:** Hands-on IAM Portfolio Project  
+**Environment:** Local Development  
+**Technologies:** Keycloak · Python · Flask · Authlib · OpenID Connect (OIDC)
 
+## Overview
 
-\## Project Overview
+This project demonstrates core Identity and Access Management (IAM) concepts through a simulated organization called Northstar Solutions. Using Keycloak for identity authentication and Flask for application access control, the lab explores how user identities, assigned roles, and account status affect access to protected resources.
 
+The project focuses on authentication, role-based access control (RBAC), access validation, account deactivation, and access review documentation.
 
+## Objectives
 
-This project is a simulated Identity and Access Management (IAM) environment built with Keycloak and Flask. It demonstrates identity authentication, role-based access control (RBAC), account deactivation, and access review documentation.
+- Configure centralized authentication using Keycloak and OIDC.
+- Implement role-based authorization in a Flask application.
+- Validate permitted and denied access to protected application routes.
+- Simulate user offboarding by disabling an account.
+- Document access decisions, test results, and security recommendations.
 
+## Technology Stack
 
-
-The lab uses fictional users and a local development environment to model common IAM tasks relevant to entry-level IAM and security roles.
-
-
-
-\## Objectives
-
-
-
-\- Configure centralized authentication using Keycloak and OpenID Connect (OIDC).
-
-\- Assign application permissions through role-based access control.
-
-\- Test authorized and unauthorized access to application areas.
-
-\- Simulate an employee offboarding scenario by disabling an account.
-
-\- Document access review results, findings, and limitations.
-
-
-
-\## Tools and Technologies
-
-
-
-\- \*\*Keycloak:\*\* Identity and access management and OIDC authentication
-
-\- \*\*Python and Flask:\*\* Web application and authorization logic
-
-\- \*\*Authlib:\*\* OIDC integration
-
-\- \*\*Git and GitHub:\*\* Version control and project documentation
-
-
-
-\## Lab Architecture
-
-
-
-1\. A user opens the Flask application.
-
-2\. The application redirects the user to Keycloak to authenticate.
-
-3\. Keycloak authenticates the user and returns identity and role information.
-
-4\. Flask checks the user's assigned roles before granting access to protected routes.
-
-5\. Unauthorized requests are denied.
-
-6\. A disabled account is tested to confirm that a new login is rejected.
-
-
-
-\## Roles and Access Rules
-
-
-
-| Role | Intended Access |
-
+| Technology | Purpose |
 |---|---|
+| Keycloak | Identity management and authentication |
+| OpenID Connect | Authentication protocol |
+| Python and Flask | Web application and access-control logic |
+| Authlib | OIDC integration |
+| GitHub | Source code and project documentation |
 
-| `hr` | HR area |
+## Architecture & Workflow
 
-| `finance` | Finance area |
+1. The user opens the Flask web application.
+2. The application redirects the user to Keycloak for authentication.
+3. Keycloak authenticates the user and provides identity and role information.
+4. Flask evaluates the user's assigned roles against the requested application area.
+5. Access is granted or denied according to the configured authorization rules.
+6. A disabled account is tested to verify that a new login attempt is rejected.
 
-| `it\_admin` | HR, Finance, and IT areas |
+## Role-Based Access Control
 
+The lab uses three fictional user roles:
 
+| Role | Authorized Areas |
+|---|---|
+| `hr` | HR |
+| `finance` | Finance |
+| `it_admin` | HR, Finance, IT |
 
-The `it\_admin` role has elevated access in this lab. In a real environment, privileged access should be restricted, justified by business need, and reviewed regularly.
+The `it_admin` role has elevated access across all three areas. This configuration illustrates why privileged accounts require appropriate authorization, least-privilege controls, and periodic access reviews.
 
+## Testing & Validation
 
+The following scenarios were tested:
 
-\## Validation Summary
+- **Authorized access:** The HR user accessed the HR area.
+- **Unauthorized access:** The HR user received HTTP 403 responses when accessing Finance and IT areas.
+- **Finance access:** The Finance user's access permissions were tested.
+- **Privileged access:** The IT administrator's access to all three application areas was tested.
+- **Account deactivation:** A disabled HR account was rejected during a new login attempt.
 
+Test outcomes and access review findings are documented in `access-review.md`.
 
+Configuration and validation screenshots will be added to the `evidence/` directory.
 
-\- HR access was granted to the HR test user.
+## Access Review & Offboarding
 
-\- Unauthorized HR user requests to Finance and IT returned HTTP 403.
+The access review documents each fictional user's role, account status, access decision, and justification.
 
-\- Finance user access was tested.
+Key security considerations include:
 
-\- IT administrator access to all three application areas was tested.
+- Applying least privilege when assigning access.
+- Reviewing privileged accounts and their business justification.
+- Disabling accounts during offboarding.
+- Reviewing existing sessions and token revocation behavior.
+- Maintaining documentation of access decisions and test results.
 
-\- A disabled HR account was rejected during a new login attempt.
+## Running the Application
 
-\- Results were documented in `access-review.md`.
+This lab is intended for local development and testing.
 
+**Prerequisites**
+- Python 3.11 or a compatible version
+- Keycloak
+- Required Python packages for the Flask application
 
+**Setup**
 
-See the `evidence/` folder for screenshots of the configuration and test results once the evidence files have been added.
+1. Start Keycloak in development mode, configured to listen on `127.0.0.1:8080`.
+2. Configure the `northstar` realm, the `northstar-flask` client, OIDC redirect URIs, role mappings, and fictional test users.
+3. Set the following environment variables in your terminal:
 
+   - `FLASK_SECRET_KEY`
+   - `KEYCLOAK_CLIENT_SECRET`
 
+4. Install the application's required Python dependencies.
+5. From the project root, start the Flask application:
 
-\## Access Review
+   ```cmd
+   python app\app.py
+   ```
 
+6. Open `http://127.0.0.1:5000` in your browser and test the configured accounts and access permissions.
 
+**Security note:** Never publish actual credentials, passwords, tokens, or secret values. Use fictional accounts and local development credentials only.
 
-The `access-review.md` file records the fictional users' assigned roles, account status, access decisions, and recommendations.
+## Scope & Limitations
 
+This is a simulated IAM lab using a local Keycloak instance and Flask application. It is not a production deployment.
 
+Existing-session behavior, immediate token revocation, production-grade session management, and hardened deployment settings require additional testing before the design could be considered for production use.
 
-The review emphasizes least privilege, periodic access reviews, privileged account oversight, and offboarding controls.
+## Skills Demonstrated
 
-
-
-\## Running the Lab
-
-
-
-This project is designed for local testing, not production deployment.
-
-
-
-1\. Install Python 3.11 or a compatible version, Keycloak, and the required Python packages.
-
-2\. Start Keycloak in development mode on `127.0.0.1:8080`.
-
-3\. Configure a Keycloak realm, application client, OIDC redirect URI, role mapper, and test users.
-
-4\. Set the required environment variables in your local terminal:
-
-&#x20;  - `FLASK\_SECRET\_KEY`
-
-&#x20;  - `KEYCLOAK\_CLIENT\_SECRET`
-
-5\. Install the Python dependencies required by the Flask application.
-
-6\. Start the application from the project root:
-
-
-
-&#x20;  ```cmd
-
-&#x20;  python app\\app.py
-
-&#x20;  ```
-
-
-
-7\. Open `http://127.0.0.1:5000` in your browser and test the configured users and access rules.
-
-
-
-\*\*Security note:\*\* Use only fictional test accounts and local development credentials. Never commit actual secrets, passwords, tokens, or production credentials to GitHub.
-
-
-
-\## Scope and Limitations
-
-
-
-This is a simulated local IAM lab. It is not a production deployment or evidence of professional enterprise IAM experience. Existing sessions, immediate token revocation, production-grade session management, and secure production configuration require additional validation.
-
-
-
-\## Skills Demonstrated
-
-
-
-\- IAM fundamentals and identity lifecycle concepts
-
-\- OIDC authentication configuration
-
-\- Role-based access control and least privilege
-
-\- Access testing and authorization failure validation
-
-\- Account deactivation and offboarding simulation
-
-\- Access review documentation
-
-\- Security-conscious project documentation
-
-
+- IAM fundamentals and identity lifecycle concepts
+- OIDC authentication configuration
+- Role-based access control and least privilege
+- Access testing and authorization validation
+- Account deactivation and offboarding simulation
+- Access review and security documentation
+- Secure handling of application secrets
 
