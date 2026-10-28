@@ -1,72 +1,50 @@
-\# IAM Access Review Report
+# IAM Access Review Report
 
+**Project:** Northstar Solutions — IAM Lifecycle & Access Control Lab  
+**Review Type:** Simulated User Access Review  
+**Environment:** Local Keycloak and Flask Application
 
+## 1. Review Objective
 
-\## Project
+Evaluate user account status and assigned roles to verify that access permissions align with each user's intended responsibilities. The review also documents account deactivation testing and identifies areas requiring further validation.
 
-Northstar Solutions — Identity and Access Management Lab
+## 2. Access Review Results
 
-
-
-\## Review Purpose
-
-Review user account status and assigned roles to identify inappropriate or unnecessary access.
-
-
-
-\## Access Review Results
-
-
-
-| User | Assigned Role | Account Status | Access Decision | Reason |
-
+| User | Assigned Role | Account Status | Review Decision | Justification |
 |---|---|---|---|---|
+| `alice.hr` | `hr` | Disabled | Maintain disabled status | Account deactivated for the offboarding simulation; new login attempts were rejected. |
+| `ben.finance` | `finance` | Enabled | Retain Finance access | Assigned role matches the user's intended function in the lab. |
+| `chris.it` | `it_admin` | Enabled | Retain for lab testing | Elevated role provides access to HR, Finance, and IT areas. Privileged access should be justified and reviewed. |
 
-| alice.hr | hr | Disabled | Retain record; deny new login | Account deactivated for offboarding simulation |
+## 3. Validation Evidence
 
-| ben.finance | finance | Enabled | Retain Finance access | Role matches the user's assigned function |
+The following scenarios were tested in the local environment:
 
-| chris.it | it\_admin | Enabled | Retain privileged access for lab testing | IT administrator role grants access to HR, Finance, and IT areas |
+- **HR authorization:** `alice.hr` successfully accessed the HR area before account deactivation.
+- **Unauthorized access:** Requests from `alice.hr` to Finance and IT returned HTTP 403 before the account was disabled.
+- **Finance authorization:** Access permissions for `ben.finance` were tested.
+- **Privileged access:** `chris.it` was tested against all three application areas.
+- **Offboarding:** After `alice.hr` was disabled in Keycloak, a new login attempt was rejected.
 
+These results reflect the specific test scenarios performed and do not constitute a comprehensive security assessment.
 
+## 4. Findings & Recommendations
 
-\## Validation Evidence
+1. **Account deactivation:** Disabled accounts should be prevented from initiating new authenticated sessions.
+2. **Least privilege:** Users should receive only the permissions necessary for their assigned responsibilities.
+3. **Privileged access management:** The `it_admin` role should be limited to authorized users and periodically reviewed.
+4. **Offboarding controls:** The process should include identity deactivation and validation of existing application sessions and token behavior.
+5. **Access review documentation:** Reviews should record assigned roles, account status, decisions, justifications, and follow-up actions.
 
-\- Alice's disabled account was rejected during a new login attempt.
+## 5. Scope & Limitations
 
-\- Ben's Finance access was tested.
+This review was conducted as part of a simulated IAM portfolio project using fictional accounts in a local Keycloak and Flask environment.
 
-\- Chris's access to all three application areas was tested.
+The review does not represent a production enterprise access review. Existing-session invalidation, immediate token revocation, and production-grade session controls have not been fully validated.
 
-\- Alice's HR access was allowed before account deactivation.
+## 6. Review Conclusion
 
-\- Unauthorized access attempts by Alice returned HTTP 403 before her account was disabled.
+The tested role-based access rules behaved as expected for the documented scenarios. Unauthorized requests from the HR user were denied, and the disabled account was rejected during a new login attempt.
 
-
-
-\## Findings and Recommendations
-
-1\. Disabled accounts should not be able to authenticate.
-
-2\. Access should follow the principle of least privilege.
-
-3\. Privileged roles such as `it\_admin` should be restricted, reviewed periodically, and justified by business need.
-
-4\. Offboarding procedures should include disabling the identity and reviewing existing application sessions and tokens.
-
-5\. Access reviews should be documented and repeated periodically.
-
-
-
-\## Scope and Limitations
-
-This is a simulated local IAM lab using fictional users and a local Keycloak and Flask application. The results are not evidence of a production enterprise access review.
-
-
-
-\## Review Outcome
-
-The tested role-based access rules behaved as expected for the documented scenarios. Alice's disabled account was rejected during a new login attempt. Existing sessions and immediate token revocation require separate validation.
-
-
+Further validation is required to establish how existing sessions and tokens behave after account deactivation. The results demonstrate foundational IAM testing and access review documentation practices within a controlled lab environment.
 
