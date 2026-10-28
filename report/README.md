@@ -1,14 +1,8 @@
-# IAM Lifecycle & Access Control Lab — Report
+# IAM Lab Report
 
-This folder contains the technical report for the Northstar Solutions IAM lab, built using Keycloak and Flask.
+This folder contains the technical report for the Northstar Solutions IAM Lifecycle and Access Control Lab, built using Keycloak and Flask.
 
-The report covers:
-
-- Keycloak and OpenID Connect (OIDC) authentication setup
-- Role-based access control (RBAC) configuration
-- Authorized and unauthorized access testing
-- User account deactivation and offboarding validation
-- Findings, limitations, and security recommendations
+The report covers authentication configuration, role-based access control (RBAC), access testing, account deactivation, and security recommendations.
 
 ## Report
 
